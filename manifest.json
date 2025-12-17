@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Multi-Model Conversation Export",
+  "version": "0.8.0",
+  "description": "Export ChatGPT, Claude, and Gemini Conversations to Zip (ChatGPT includes images)",
+  "permissions": ["activeTab", "storage", "downloads"],
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://chatgpt.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*",
+    "https://*.googleusercontent.com/*",
+    "https://files.oaiusercontent.com/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*"
+      ],
+      "js": [
+        "lib/jszip.min.js",
+        "modules/config.js",
+        "modules/auth.js",
+        "modules/file-utils.js",
+        "mediaExtractor.js",
+        "modules/conversation.js",
+        "modules/ui.js",
+        "modules/chatgpt-handler.js",
+        "modules/gemini-handler.js",
+        "modules/claude-handler.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    { "resources": ["icons/download-icon.min.svg"], "matches": ["<all_urls>"] }
+  ]
+}
